@@ -1,0 +1,10 @@
+venv
+*.pyc
+.env
+db.sqlite3
+static
+local_settings.py
+sangheun.sublime-project
+sangheun.sublime-workspace
+static_cdn
+pip-selfcheck.json

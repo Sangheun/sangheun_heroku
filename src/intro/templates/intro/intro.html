@@ -1,0 +1,87 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이상흔의 홈페이지</title>
+    <link href='https://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/intro.css' %}">
+    <script   src="http://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+    <script src="{% static 'js/widget.js' %}"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            $('form').submit(function(evt){
+                evt.preventDefault();
+                var url = $(this).attr("action");
+                var formData = $(this).serialize();
+                $.ajax(url, {
+                    data: formData,
+                    type: "POST",
+                    success: function() {
+                        $("#login").html("<p>로그인</p>")
+                    }
+                }); //end post
+            }); //end submit
+
+
+
+        }); //end ready
+        function sendAJAX() {
+            $.get('/travel', function(response){
+                $("#ajax").html(response);
+            })
+            // $("#ajax").load('/travel/');
+
+        } // end sendAJAX
+
+
+    </script>
+
+</head>
+<body>
+    <div class="main-container">
+        <header class="main-header">
+            <h1 class="header-name"><a href="#">Sangheun's Homepage</a></h1>
+            <ul class="main-nav">
+                <li><a href="#">Introduction</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Travel</a></li>
+                <li><a href="#">Nanana</a></li>
+            </ul>
+            <div id="login">
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <table>
+                        <p><label for="id_username">Username:</label>
+                        <input autofocus="" id="id_username" maxlength="254" name="username" type="text" required /></p>
+                        <p><label for="id_password">Password:</label>
+                        <input id="id_password" name="password" type="password" required /></p>
+                    </table>
+                    <input type="submit" name="">
+                </form>
+            </div>
+        </header>
+        <button id="load" onclick="sendAJAX()">Ajax!</button>
+        <div id="ajax">
+
+        </div>
+        <div class="wrap">
+            <div id="aside">
+                <h1>Aside</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+            <div id="section">
+                <h1>Section</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </div>
+        <div id="footer"><h1>footer</h1></div>
+    </div>
+    <div id="employeeList">
+
+    </div>
+</body>
+</html>

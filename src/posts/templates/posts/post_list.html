@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>blog posts</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/intro.css' %}">
+
+</head>
+<body>
+    {% for post in post_list %}
+    <a href="{% url 'posts:post_detail' post.id %}">{{post.title}}</a>
+    {% endfor %}
+
+    <p><a href="{% url 'posts:tablet_layout' %}">태블릿 pc 레이아웃</a></p>
+
+    <p><a href="{% url 'posts:fixed_bar' %}">고정 바</a></p>
+
+    <p><a href="{% url 'posts:social_main' %}">소셜커머스 메인 페이지</a></p>
+
+
+    <form action="/create_post/" method="post" id="post-form">
+        {% csrf_token %}
+        <div class="fieldWrapper">
+            {{form.text}}
+        </div>
+        <div id="results"></div> <!--erros go here-->
+        <input type="submit" name="">
+    </form>
+
+    <div>
+        <ul id="talk">
+            {% for post in post_list %}
+                <li>
+                    <strong>{{post.text}}</strong> -
+                    <em>{{post.author}}</em> -
+                    <span>{{post.created}}</span> -
+                    <a id="delete-post-{{post.id}}">{{post.pk}}</a>
+                </li>
+            {%  endfor %}
+        </ul>
+    </div>
+    <script   src="http://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+    <script src="/static/js/main.js"></script>
+
+</body>
+</html>
